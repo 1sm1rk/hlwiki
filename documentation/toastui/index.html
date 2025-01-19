@@ -1,0 +1,39 @@
+<html>
+<head>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+    <script>
+    var editor;
+
+    function createToastUI() {
+        this.editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            previewStyle: 'vertical',
+            <!--height: '500px',-->
+            initialValue: '',
+            initialEditType: 'wysiwyg',
+            placeholder: 'Please enter text...'
+          });
+    }
+
+    window.addEventListener('load', (event) => {
+        console.log('The page has fully loaded');
+        createToastUI();
+    });
+
+    function save() {
+
+        alert(this.editor.getMarkdown());
+    }
+    </script>
+</head>
+<body>
+    <div id="top">
+        <div id="editor"></div>
+    </div>
+    <div id="action" style="padding:5px">
+        <button id="savecontent" onclick="save()">save</button>
+    </div>
+</body>
+</html>

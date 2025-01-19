@@ -1,0 +1,32 @@
+markdown parser
+https://github.com/vsch/flexmark-java
+
+Requirements
+- everything in files without DB  
+- Content as markdown files
+- Metadata as Markdown comment in contentfiles (author, date, ...)
+- no "real" backend, just CRUD buttons
+- user management (users, ACL) within files
+- configuration over config file
+- multiple domain, defined over path in config file
+- ToastUI as Template engine
+- Revision Log 
+
+ADR:
+- Markdown or AsciiDoc?
+
+Bonus 
+- Template and Logo replacement
+ 
+
+Fileserver
+- dedicated fileserver module as "persistance" which can be replaced (Interfaces)
+- Metadata and content handling as "fileserver-module"
+
+Remarks:
+- to change Font awesome icon tag, edit "~/workbench/wiki/template/html5/inline_image.html.erb" -> style-class
+- font awesome 4 cheatsheet: https://fontawesome.com/v4/cheatsheet/ 
+- https://jdriven.com/blog/category/Asciidoc
+
+Plantuml:
+-https://plantuml.com/de/api
