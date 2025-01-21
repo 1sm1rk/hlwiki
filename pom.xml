@@ -55,17 +55,6 @@
 		    <artifactId>commonmark</artifactId>
 		    <version>0.24.0</version>
 		</dependency>
-		<!-- ASCIIDoc-->
-		<dependency>
-		    <groupId>org.asciidoctor</groupId>
-		    <artifactId>asciidoctorj</artifactId>
-		    <version>2.5.7</version>
-		</dependency>	
-		<dependency>
-		    <groupId>org.asciidoctor</groupId>
-		    <artifactId>asciidoctorj-pdf</artifactId>
-		    <version>2.3.4</version>
-		</dependency>
 		<!-- Sonar scanner-->
 		<dependency>
     		<groupId>org.sonarsource.scanner.maven</groupId>
