@@ -6,11 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class HlwikiApplication {
+public class HLWikiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HlwikiApplication.class, args);
-		
+		SpringApplication.run(HLWikiApplication.class, args);
 	}
 
 }
