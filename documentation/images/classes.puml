@@ -1,0 +1,99 @@
+@startuml
+package Service {
+	class ApplicationShutdownService {
+		+void shutDown(String message)
+	} 
+	
+	class MarkdownParser {
+		+String renderHtml(String url)
+	}
+	
+	class PropertiesService {
+		+WikiConfiguration getWikiConfigration()
+		-boolean loadProperties()
+	}
+	
+	class ContentService {
+		+String getContent(String page, WikiType type);
+	}
+	
+	class ServerCustomizer {
+		+void customize(ConfigurableWebServerFactory factory)
+	}
+}
+
+package Configuration {
+	class WikiConfigurationFactory {
+		{static} +WikiConfiguration createInstance(Properties props)
+	}
+	
+	class WikiConfiguration {
+		#WikiConfiguration(Properties props)
+		-void checkProperties(Properties props) 
+		+[ATTRIBUTE] get[ATTRIBUTE]()
+	}
+}
+
+package Web {
+	class MainController {
+		+String getLandingPage(HttpServletRequest request)
+	}
+}
+
+package Fileserver {
+	class FileserverFactory {
+		{static} +FilserverService createInstance(FileserverProperties props)
+	}
+	
+	interface FileserverService {
+		#FileserverService(FileserverProperties props
+		+FSResult createDirectory(String directory)
+		+FSResult renameDirectory(String directoryOld, String directoryNew)
+		+FSResult deleteDirectory(String directory)
+		+FSResult createFile(String file)
+		+FSResult renameFile(String fileOld, String fileNew)
+		+FSResult deleteFile(String file)
+		
+		+FSDirectoryResult listDirectory(String directory)
+		+FSFileResult getFileContent(String file)
+	}
+	
+	class FSResult {
+		+boolean ok()
+		+String error() 
+	}
+	
+	class FSDirectoryResult {
+		String name
+		+List<FSFile> files
+	}
+	
+	class FSFileResult {
+		+FSFile file
+	}
+	
+	class FSFile {
+		+String name
+		+byte[] content	
+	}
+	
+	FileserverService -- FSResult
+	FileserverService -- FSDirectoryResult	
+	FileserverService -- FSFileResult
+	FSDirectoryResult --|> FSResult
+	FSDirectoryResult -- FSFile
+	FSFileResult --|> FSResult
+	FSFileResult -- FSFile
+}
+
+MainController --* ContentService
+ContentService --* MarkdownParser
+ContentService --* PropertiesService
+ContentService --* FileserverFactory
+PropertiesService --* ApplicationShutdownService
+PropertiesService --* WikiConfigurationFactory
+ServerCustomizer --* PropertiesService
+WikiConfigurationFactory -- WikiConfiguration
+
+FileserverFactory --* FileserverService
+@enduml

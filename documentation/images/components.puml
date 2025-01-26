@@ -1,0 +1,23 @@
+@startuml
+	package "Frontend" {
+		[WebController]
+		[Security Handling]
+		
+	}
+	
+	package "Backend" {
+		[Configuration]
+		[MarkdownParser] - ServiceAccess
+		[WebController] --> ServiceAccess
+	}
+
+    package "Fileserver" {
+         [FileServer] - DataAccess
+         [MarkdownParser] --> DataAccess
+    }	
+
+    note left of [Configuration]
+    	server customizer
+    	and application settings 
+    end note
+@enduml
