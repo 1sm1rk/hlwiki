@@ -2,6 +2,7 @@ package de.homelabs.wiki.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.commonmark.node.Node;
@@ -13,13 +14,39 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MarkdownParser {
+	PropertiesService propService;
 	Logger log = LoggerFactory.getLogger(MarkdownParser.class);
+	
+	public MarkdownParser(PropertiesService propService) {
+		this.propService = propService;
+	}
 	
 	//TODO: add a default template and css stylesheet
 	//TODO: what about images
 	//TODO: make it more 'usable'
 	public String renderHtml(String url) {
-		String before = "<html><head><title>homelabs.de</title></head><body>";
+		String stylesheet = "";
+		
+		if (Files.exists(
+				Path.of(propService.getWikiConfigration().getBasePath() + "/data/homelabs_de/style.css")
+				)
+			) {
+			try {
+				stylesheet = new String(
+						Files.readAllBytes(Path.of(propService.getWikiConfigration().getBasePath() + "/data/homelabs_de/style.css"))
+						);
+			} catch (IOException e) {
+				log.error("cannot read stylesheet file: "+propService.getWikiConfigration().getBasePath() + "/data/homelabs_de/style.css");
+			}			
+			
+		}
+		
+		String before = "<html>"
+				+ "<head>"
+				+ "<title>homelabs.de</title>"
+				+ "<style type='text/css'>"+stylesheet+"</style>"
+				+ "</head>"
+				+ "<body>";
 		String nav = "<div id='nav'>"
 				+ "<a href='/'>Home</a>&nbsp;"
 				+ "<a href='/test'>Test</a>&nbsp;"
