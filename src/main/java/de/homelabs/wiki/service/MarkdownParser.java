@@ -20,7 +20,13 @@ public class MarkdownParser {
 	//TODO: make it more 'usable'
 	public String renderHtml(String url) {
 		String before = "<html><head><title>homelabs.de</title></head><body>";
-		String nav = "<div id='nav'><a href='/'>Home</a>&nbsp;<a href='/test'>Test</a>&nbsp<a href='/test2'>Test2</a></div>";
+		String nav = "<div id='nav'>"
+				+ "<a href='/'>Home</a>&nbsp;"
+				+ "<a href='/test'>Test</a>&nbsp;"
+				+ "<a href='/test2'>Test2</a>&nbsp;"
+				+ "<a href='/einleitung/seite1'>Einleitung/Seite1</a>&nbsp;"
+				+ "<a href='/einleitung/eins/test'>Einleitung/eins/test</a>&nbsp;"
+				+ "</div>";
 		String middle = "<div id='content'>";
 		String after = "</div></body></html>";
 		

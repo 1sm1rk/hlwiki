@@ -19,7 +19,7 @@ public class MainController {
 		this.parser = parser;
 	}
 	
-	@GetMapping(value="*", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value={"*", "*/**"}, produces = MediaType.TEXT_HTML_VALUE)
 	@ResponseBody
 	String getLandingPage(HttpServletRequest request) {
 		
