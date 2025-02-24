@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.homelabs.wiki.service.MarkdownParser;
+import de.homelabs.wiki.service.WikiService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
 	Logger log = LoggerFactory.getLogger(MainController.class);
-	private MarkdownParser parser;
+	WikiService wService;
 	
-	public MainController(MarkdownParser parser) {
-		this.parser = parser;
+	public MainController(WikiService wService) {
+		this.wService = wService;
 	}
 	
 	@GetMapping(value={"*", "*/**"}, produces = MediaType.TEXT_HTML_VALUE)
@@ -25,7 +26,7 @@ public class MainController {
 		
 		log.info(request.getRequestURI());
 
-		//TODO: filter special chars and bad or malicious requests
+		//TODO: filter special chars and bad or malicious requests -> URLFilter
 		if (!request.getRequestURI().matches("[/A-Za-z0-9]+")) {
 			log.error("wrong request, contains special chars : {}", request.getRequestURI());
 			return "That did not work :-(";
@@ -33,12 +34,9 @@ public class MainController {
 		
 		//Landing Page
 		if (request.getRequestURI().equals("/") || (request.getRequestURI().equals("")))
-			return parser.renderHtml("/var/hl/hlwiki/data/homelabs_de/start.md");
+			return wService.getPage("/start.md");
 		else {
-			// /test
-			// /projekte/eins
-			
-			return parser.renderHtml("/var/hl/hlwiki/data/homelabs_de"+request.getRequestURI()+".md");
+			return wService.getPage(request.getRequestURI()+".md");
 		}
 	}
 	
